@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'music_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'music_db_',
+        'NAME': 'music_db',
         'USER': 'postgres',
         'PASSWORD': '12345',
         'HOST': 'localhost',
