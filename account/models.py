@@ -1,5 +1,5 @@
 # accounts/models.py
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
 
@@ -52,7 +52,7 @@ class MyAccountManager(BaseUserManager):
     
 
 
-class Account(AbstractBaseUser):
+class Account(AbstractBaseUser, PermissionsMixin):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     cedula = models.CharField(max_length=50, null=True, blank=True)

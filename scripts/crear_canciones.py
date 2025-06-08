@@ -14,11 +14,10 @@ from music.models import Song
 artists = ["Artist A", "Artist B", "Artist C"]
 albums = ["Album X", "Album Y", "Album Z"]
 
-for i in range(1, 31):
+for i in range(1, 16):
     Song.objects.get_or_create(
         title=f"Song {i}",
         artist=choice(artists),
         album=choice(albums)
     )
 
-print("🎶 30 canciones creadas correctamente.")

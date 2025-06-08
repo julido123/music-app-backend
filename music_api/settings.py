@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'drf_spectacular_sidecar',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",  # Angular local
 ]
@@ -89,7 +91,7 @@ WSGI_APPLICATION = 'music_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'music_db',
+        'NAME': 'music_db_',
         'USER': 'postgres',
         'PASSWORD': '12345',
         'HOST': 'localhost',

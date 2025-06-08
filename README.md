@@ -2,6 +2,10 @@
 
 Este es un proyecto de backend para una aplicación de música desarrollado con **Python 3.11.9**, **Django** y **Django REST Framework**, utilizando una base de datos **PostgreSQL**.
 
+### ¿Por qué se eligió Django y DRF?
+
+Se eligieron **Django** y **Django REST Framework** porque permiten construir rápidamente APIs robustas, seguras y escalables, aprovechando un ecosistema maduro de bibliotecas, autenticación integrada y administración avanzada. Además, **Django** simplifica mucho la gestión de usuarios, permisos y la creación de endpoints RESTful con **DRF**.
+
 ---
 
 ## 🚀 Requisitos
@@ -184,3 +188,149 @@ python manage.py test
 - El backend está preparado para integrarse con un frontend en Angular o cualquier otro framework.
 
 ---
+
+## 🗂️ Estructura de la base de datos
+
+La aplicación utiliza una base de datos relacional PostgreSQL con el siguiente esquema:
+
+![alt text](MER.png)
+
+### Tablas principales:
+
+
+
+* *ACCOUNT*: Contiene la información de los usuarios (cuenta).
+
+  Campos principales:
+
+
+
+  * id (PK): ID único.
+
+  * nombre, apellido, cedula, username, email.
+
+  * date_joined, last_login: Fechas de registro y último acceso.
+
+  * is_admin, is_staff, is_active, is_superadmin: Roles y estado del usuario.
+
+
+
+* *PLAYLIST*: Representa listas de reproducción creadas por los usuarios.
+
+  Campos principales:
+
+
+
+  * id (PK): ID único de la playlist.
+
+  * name, description: Nombre y descripción.
+
+  * created_at: Fecha de creación.
+
+  * user_id (FK): Relación con el usuario que la creó (ACCOUNT).
+
+
+
+* *SONG*: Canciones disponibles en la aplicación.
+
+  Campos principales:
+
+
+
+  * id (PK): ID único de la canción.
+
+  * title, artista, álbum: Información de la canción.
+
+
+
+* *PLAYLIST\_SONGS*: Tabla intermedia para la relación muchos a muchos entre PLAYLIST y SONG.
+
+  Campos principales:
+
+
+
+  * id (PK): ID único de la relación.
+
+  * playlist_id (FK): Referencia a la playlist (PLAYLIST).
+
+  * song_id (FK): Referencia a la canción (SONG).
+
+
+
+Las relaciones entre las tablas permiten que un usuario cree múltiples playlists y que una playlist contenga múltiples canciones.
+
+---
+
+## 🛠 Tablas de Django por defecto
+
+Además de las tablas propias de la app (como music_playlist, music_song, etc.), *Django* genera automáticamente varias tablas relacionadas con la gestión de usuarios, permisos y sesiones:
+
+### 🔑 *auth\_group*
+
+* *Propósito*: Define grupos de usuarios para aplicar permisos en bloque.
+* *Campos principales*:
+
+  * id (PK): ID del grupo.
+  * name: Nombre del grupo.
+
+### 🔐 *auth\_group\_permissions*
+
+* *Propósito*: Relaciona los grupos (auth_group) con los permisos (auth_permission).
+* *Campos principales*:
+
+  * id (PK): ID único.
+  * group_id (FK): ID del grupo.
+  * permission_id (FK): ID del permiso.
+
+### 🔑 *auth\_permission*
+
+* *Propósito*: Define los permisos (crear, ver, cambiar, borrar) asociados a los modelos.
+* *Campos principales*:
+
+  * id (PK): ID del permiso.
+  * name: Nombre
+  * content_type_id: El modelo al que aplica.
+  * codename: Código interno (ej.: add_user, change_song).
+
+### 📝 *django\_admin\_log*
+
+* *Propósito*: Registra todas las acciones realizadas en el panel de administración (/admin).
+* *Campos principales*:
+
+  * id (PK): ID único.
+  * action_time: Fecha/hora de la acción.
+  * user_id: Usuario que la hizo.
+  * content_type_id, object_id, object_repr: Datos del objeto modificado.
+  * action_flag, change_message: Qué tipo de acción fue (agregado, cambio, borrado) y el mensaje de cambio.
+
+### 📦 *django\_content\_type*
+
+* *Propósito*: Representa todos los modelos instalados en el proyecto.
+* *Campos principales*:
+
+  * id (PK): ID único.
+  * app_label: App a la que pertenece (ej.: auth, music).
+  * model: Nombre del modelo.
+
+### 🔄 *django\_migrations*
+
+* *Propósito*: Guarda el historial de migraciones aplicadas.
+* *Campos principales*:
+
+  * id (PK): ID único.
+  * app, name: App y nombre de la migración.
+  * applied: Fecha de aplicación.
+
+### 🔑 *django\_session*
+
+* *Propósito*: Gestiona las sesiones de los usuarios conectados (si usas sesiones en lugar de solo tokens).
+* *Campos principales*:
+
+  * session_key (PK): Clave única de la sesión.
+  * session_data: Información serializada.
+  * expire_date: Fecha de expiración.
+
+---
+
+
+

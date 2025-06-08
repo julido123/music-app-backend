@@ -27,7 +27,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/cuentas/', include('account.urls')),
+    path('api/accounts/', include('account.urls')),
     path('api/music/', include('music.api.urls')),
 
     # Schema generation
